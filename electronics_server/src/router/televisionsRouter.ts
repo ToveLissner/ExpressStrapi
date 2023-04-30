@@ -1,6 +1,8 @@
 import bodyParser from "body-parser";
 import express, { Router } from "express";
 import televisionsController from "../controller/televisionsController";
+import TelevisionValidator from "../validator/TelevisionValidator";
+import middleware from "../middleware/middleware";
 
 export const televisionsRouter: Router = express.Router();
 
@@ -13,20 +15,19 @@ televisionsRouter.post("/", televisionsController.add);
 
 televisionsRouter.get(
   "/:id",
-  //   TelevisionValidator.checkIdParam(),
+  TelevisionValidator.checkIdParam(),
   televisionsController.getTelevisionById
 );
 
 televisionsRouter.delete(
   "/:id",
-  //   TelevisionValidator.checkIdParam(),
-  // Middleware.handleValidationError,
+  TelevisionValidator.checkIdParam(),
+  middleware.handleValidationError,
   televisionsController.deleteTelevisionById
 );
 
 televisionsRouter.put(
   "/:id",
-  //   TelevisionValidator.checkIdParam(),
-  // Middleware
+  TelevisionValidator.checkIdParam(),
   televisionsController.updateTelevisionById
 );
