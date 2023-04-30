@@ -1,0 +1,44 @@
+import bodyParser from "body-parser";
+import express, { Router } from "express";
+import mobilesController from "../controller/mobilesController";
+import MobileValidator from "../validator/MobileValidator";
+import middleware from "../middleware/middleware";
+
+export const mobilesRouter: Router = express.Router();
+
+mobilesRouter.use(bodyParser.json());
+mobilesRouter.use(bodyParser.urlencoded({ extended: true }));
+
+mobilesRouter.get(
+  "/",
+  //   Middleware.handleValidationError,
+  mobilesController.getAllMobiles
+);
+
+mobilesRouter.post(
+  "/",
+  MobileValidator.checkCreatedMobile(),
+  middleware.handleValidationError,
+  mobilesController.add
+);
+
+mobilesRouter.get(
+  "/:id",
+  // MobileValidator.checkIdParam(),
+  // Middleware.handleValidationError,
+  mobilesController.getMobileById
+);
+
+mobilesRouter.delete(
+  "/:id",
+  // MobileValidator.checkIdParam(),
+  // Middleware.handleValidationError,
+  mobilesController.deleteMobileById
+);
+
+mobilesRouter.put(
+  "/:id",
+  // MobileValidator.checkIdParam(),
+  // Middleware
+  mobilesController.updateMobileById
+);
