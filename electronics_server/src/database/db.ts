@@ -12,14 +12,12 @@ db.run(`
     )
 `);
 
-// De två under denna kommentar är de som hör till login - och som jag har noll koll på //
-
 export const checkUserNameAndPassword = async (
   username: string,
   password: string,
   callback: Function
 ) => {
-  const sql_query = `SELECT COUNT(*) AS count FROM accounts WHERE (username = ?, password = ?)`;
+  const sql_query = `SELECT COUNT(*) AS count FROM accounts WHERE username = ? AND password = ?`;
   db.all(sql_query, [username, password], callback);
 };
 

@@ -18,13 +18,13 @@ class LoginsController {
           if (found) {
             const inside = login({ ...body }, (err: Error) => {
               return res.json({
-                body,
-                message: "hej",
+                message: "det fungerade!",
               });
             });
           } else {
             res.json({
-              message: "hejdå",
+              err,
+              message: "användarnamnet matchade inte lösenordet",
             });
           }
         } catch (e) {}
