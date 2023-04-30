@@ -1,6 +1,8 @@
 import bodyParser from "body-parser";
 import express, { Router } from "express";
 import audioDevicesController from "../controller/audioDevicesController";
+import middleware from "../middleware/middleware";
+import AudioValidator from "../validator/AudioValidator";
 
 export const audioDevicesRouter: Router = express.Router();
 
@@ -9,34 +11,33 @@ audioDevicesRouter.use(bodyParser.urlencoded({ extended: true }));
 
 audioDevicesRouter.get(
   "/",
-  //   Middleware.handleValidationError,
+  middleware.handleValidationError,
   audioDevicesController.getAllAudio
 );
 
 audioDevicesRouter.post(
   "/",
-  //   ComputerValidator.checkCreatedMobile(),
-  //   Middleware.handleValidationError,
+  AudioValidator.checkCreatedAudio(),
+  middleware.handleValidationError,
   audioDevicesController.add
 );
 
 audioDevicesRouter.get(
   "/:id",
-  //   ComputerValidator.checkIdParam(),
-  // Middleware.handleValidationError,
+  AudioValidator.checkIdParam(),
+  middleware.handleValidationError,
   audioDevicesController.getAudioById
 );
 
 audioDevicesRouter.delete(
   "/:id",
-  //   ComputerValidator.checkIdParam(),
-  // Middleware.handleValidationError,
+  AudioValidator.checkIdParam(),
+  middleware.handleValidationError,
   audioDevicesController.deleteAudioById
 );
 
 audioDevicesRouter.put(
   "/:id",
-  //   ComputerValidator.checkIdParam(),
-  // Middleware
+  AudioValidator.checkIdParam(),
   audioDevicesController.updateAudioById
 );
