@@ -10,24 +10,28 @@ class LoginsController {
       username,
       password,
       (err: Error, result: any) => {
-        console.log("här" + result.count);
         const foundUser = result[0].count;
         const found = foundUser === 1;
         console.log(found);
         try {
-          if (found) {
+          if (!found) {
             const inside = login({ ...body }, (err: Error) => {
-              return res.json({
-                message: "det fungerade!",
+              res.json({
+                err,
+                message: "Användarnamnet matchade inte lösenordet",
               });
             });
           } else {
-            res.json({
-              err,
-              message: "användarnamnet matchade inte lösenordet",
+            return res.json({
+              message: "Användarnamn matchade lösenordet!",
             });
           }
-        } catch (e) {}
+        } catch (e) {
+          return res.json({
+            message: "Något gick snett!",
+            status: 500,
+          });
+        }
       }
     );
   }
