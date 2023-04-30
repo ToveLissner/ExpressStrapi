@@ -23,6 +23,7 @@ class LoginsController {
             });
           } else {
             return res.json({
+              body,
               message: "Användarnamn matchade lösenordet!",
             });
           }
