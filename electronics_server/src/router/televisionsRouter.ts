@@ -7,23 +7,13 @@ export const televisionsRouter: Router = express.Router();
 televisionsRouter.use(bodyParser.json());
 televisionsRouter.use(bodyParser.urlencoded({ extended: true }));
 
-televisionsRouter.get(
-  "/",
-  //   Middleware.handleValidationError,
-  televisionsController.getAllTelevisions
-);
+televisionsRouter.get("/", televisionsController.getAllTelevisions);
 
-televisionsRouter.post(
-  "/",
-  //   TelevisionValidator.checkCreatedMobile(),
-  //   Middleware.handleValidationError,
-  televisionsController.add
-);
+televisionsRouter.post("/", televisionsController.add);
 
 televisionsRouter.get(
   "/:id",
   //   TelevisionValidator.checkIdParam(),
-  // Middleware.handleValidationError,
   televisionsController.getTelevisionById
 );
 

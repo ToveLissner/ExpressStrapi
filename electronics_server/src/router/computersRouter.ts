@@ -1,6 +1,8 @@
 import bodyParser from "body-parser";
 import express, { Router } from "express";
 import computersController from "../controller/computersController";
+import ComputerValidator from "../validator/ComputerValidator";
+import middleware from "../middleware/middleware";
 
 export const computersRouter: Router = express.Router();
 
@@ -9,34 +11,24 @@ computersRouter.use(bodyParser.urlencoded({ extended: true }));
 
 computersRouter.get(
   "/",
-  //   Middleware.handleValidationError,
+  middleware.handleValidationError,
   computersController.getAllComputers
 );
 
 computersRouter.post(
   "/",
-  //   ComputerValidator.checkCreatedMobile(),
-  //   Middleware.handleValidationError,
+  ComputerValidator.checkCreatedComputer(),
+  middleware.handleValidationError,
   computersController.add
 );
 
 computersRouter.get(
   "/:id",
-  //   ComputerValidator.checkIdParam(),
-  // Middleware.handleValidationError,
+  middleware.handleValidationError,
+  ComputerValidator.checkIdParam(),
   computersController.getComputerById
 );
 
-computersRouter.delete(
-  "/:id",
-  //   ComputerValidator.checkIdParam(),
-  // Middleware.handleValidationError,
-  computersController.deleteComputerById
-);
+computersRouter.delete("/:id", computersController.deleteComputerById);
 
-computersRouter.put(
-  "/:id",
-  //   ComputerValidator.checkIdParam(),
-  // Middleware
-  computersController.updateComputerById
-);
+computersRouter.put("/:id", computersController.updateComputerById);

@@ -9,11 +9,7 @@ export const mobilesRouter: Router = express.Router();
 mobilesRouter.use(bodyParser.json());
 mobilesRouter.use(bodyParser.urlencoded({ extended: true }));
 
-mobilesRouter.get(
-  "/",
-  //   Middleware.handleValidationError,
-  mobilesController.getAllMobiles
-);
+mobilesRouter.get("/", mobilesController.getAllMobiles);
 
 mobilesRouter.post(
   "/",
@@ -22,23 +18,8 @@ mobilesRouter.post(
   mobilesController.add
 );
 
-mobilesRouter.get(
-  "/:id",
-  // MobileValidator.checkIdParam(),
-  // Middleware.handleValidationError,
-  mobilesController.getMobileById
-);
+mobilesRouter.get("/:id", mobilesController.getMobileById);
 
-mobilesRouter.delete(
-  "/:id",
-  // MobileValidator.checkIdParam(),
-  // Middleware.handleValidationError,
-  mobilesController.deleteMobileById
-);
+mobilesRouter.delete("/:id", mobilesController.deleteMobileById);
 
-mobilesRouter.put(
-  "/:id",
-  // MobileValidator.checkIdParam(),
-  // Middleware
-  mobilesController.updateMobileById
-);
+mobilesRouter.put("/:id", mobilesController.updateMobileById);
