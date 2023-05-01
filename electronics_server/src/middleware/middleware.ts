@@ -18,6 +18,8 @@ class Middleware {
   authenticateToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
+    console.log(req.headers);
+    console.log("token:" + token);
 
     if (!token) {
       return res.status(401).json({ error: "Token saknas" });
