@@ -14,6 +14,7 @@ audioDevicesRouter.post(
   "/",
   AudioValidator.checkCreatedAudio(),
   middleware.handleValidationError,
+  authorization.authenticateToken,
   audioDevicesController.add
 );
 
@@ -28,18 +29,19 @@ audioDevicesRouter.delete(
   "/:id",
   AudioValidator.checkIdParam(),
   middleware.handleValidationError,
+  authorization.authenticateToken,
   audioDevicesController.deleteAudioById
 );
 
 audioDevicesRouter.put(
   "/:id",
   AudioValidator.checkIdParam(),
+  authorization.authenticateToken,
   audioDevicesController.updateAudioById
 );
 
 audioDevicesRouter.get(
   "/",
-  // middleware.handleValidationError,
-  authorization.authenticateToken,
+  middleware.handleValidationError,
   audioDevicesController.getAllAudio
 );

@@ -3,6 +3,7 @@ import express, { Router } from "express";
 import computersController from "../controller/computersController";
 import ComputerValidator from "../validator/ComputerValidator";
 import middleware from "../middleware/middleware";
+import authorization from "../middleware/authorization";
 
 export const computersRouter: Router = express.Router();
 
@@ -19,6 +20,7 @@ computersRouter.post(
   "/",
   ComputerValidator.checkCreatedComputer(),
   middleware.handleValidationError,
+  authorization.authenticateToken,
   computersController.add
 );
 
@@ -29,6 +31,14 @@ computersRouter.get(
   computersController.getComputerById
 );
 
-computersRouter.delete("/:id", computersController.deleteComputerById);
+computersRouter.delete(
+  "/:id",
+  authorization.authenticateToken,
+  computersController.deleteComputerById
+);
 
-computersRouter.put("/:id", computersController.updateComputerById);
+computersRouter.put(
+  "/:id",
+  authorization.authenticateToken,
+  computersController.updateComputerById
+);
