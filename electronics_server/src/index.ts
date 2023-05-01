@@ -16,7 +16,6 @@ const PORT = 4646;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use("/products", productsRouter);
 app.use("/televisions", televisionsRouter);
 app.use("/mobiles", mobilesRouter);
 app.use("/computers", computersRouter);

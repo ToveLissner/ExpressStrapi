@@ -1,5 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
+
+interface JwtPayload {
+  userId: string;
+}
 
 class Middleware {
   handleValidationError(req: Request, res: Response, next: NextFunction) {
@@ -8,6 +13,25 @@ class Middleware {
       return res.json(error.array()[0]);
     }
     next();
+  }
+
+  AuthenticateToken(req: Request, res: Response, next: NextFunction) {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({ error: "Token saknas" });
+    }
+
+    jwt.verify(token, process.env.JWT_TOKEN as string),
+      (err: Error, payload) => {
+        if (err) {
+          return res.status(403).json({ error: "Ogiltig token!" });
+        }
+
+        req.user = payload as JwtPayload;
+        next();
+      };
   }
 }
 

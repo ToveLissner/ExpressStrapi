@@ -1,5 +1,6 @@
 import { Request, Response, response } from "express";
 import { checkUserName, checkUserNameAndPassword, login } from "../database/db";
+import jwt, { Secret, SignCallback } from "jsonwebtoken";
 
 class LoginsController {
   async userLogin(req: Request, res: Response) {
@@ -22,9 +23,15 @@ class LoginsController {
               });
             });
           } else {
+            const token: string = jwt.sign(
+              { username: req.body.username },
+              process.env.JWT_TOKEN || ""
+            );
             return res.json({
               body,
-              message: "Användarnamn matchade lösenordet!",
+              token,
+              message: "Inloggad",
+              status: 200,
             });
           }
         } catch (e) {
