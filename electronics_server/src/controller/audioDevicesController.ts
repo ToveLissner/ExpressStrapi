@@ -21,7 +21,9 @@ class AudioController {
   }
 
   async getAllAudio(req: Request, res: Response) {
+    console.log("hej");
     try {
+      console.log("hej");
       let response = await getAllAudioFromStrapi();
       console.log(response.data);
       return res.json(response.data);
