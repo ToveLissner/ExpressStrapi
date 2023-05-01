@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { VerifyErrors } from "jsonwebtoken";
 import { IJwtPayload } from "../models/IJwtPayload";
 
 class Authorization {
@@ -9,21 +9,22 @@ class Authorization {
     console.log(token);
 
     if (!token) {
+      jwt.verify(
+        token,
+        process.env.JWT_TOKEN as string,
+        undefined,
+        (err: VerifyErrors | null, decoded: object | undefined) => {
+          if (err) {
+            return res.status(403).json({ error: "Ogiltig token!" });
+          }
+          const payload = decoded as IJwtPayload;
+          req.body.username = payload.username;
+          next();
+        }
+      );
+    } else {
       return res.status(401).json({ error: "Token saknas" });
     }
-
-    jwt.verify(
-      token,
-      process.env.JWT_TOKEN as string,
-      (err: Error, payload: IJwtPayload) => {
-        if (err) {
-          return res.status(403).json({ error: "Ogiltig token!" });
-        }
-
-        req.username = payload.username;
-        next();
-      }
-    );
   }
 }
 
