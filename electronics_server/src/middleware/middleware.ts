@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 
-interface JwtPayload {
-  userId: string;
+interface jwtPayload {
+  username: string;
 }
 
 class Middleware {
@@ -15,7 +15,7 @@ class Middleware {
     next();
   }
 
-  AuthenticateToken(req: Request, res: Response, next: NextFunction) {
+  authenticateToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
@@ -24,14 +24,12 @@ class Middleware {
     }
 
     jwt.verify(token, process.env.JWT_TOKEN as string),
-      (err: Error, payload: any) => {
+      (err: Error, payload: jwtPayload) => {
         if (err) {
           return res.status(403).json({ error: "Ogiltig token!" });
         }
 
-        // ändrade från user till body
-
-        req.body = payload as JwtPayload;
+        req.body.username = payload as jwtPayload;
         next();
       };
   }

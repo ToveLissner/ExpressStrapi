@@ -12,6 +12,7 @@ audioDevicesRouter.use(bodyParser.urlencoded({ extended: true }));
 audioDevicesRouter.get(
   "/",
   middleware.handleValidationError,
+  middleware.authenticateToken,
   audioDevicesController.getAllAudio
 );
 
