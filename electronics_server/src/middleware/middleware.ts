@@ -24,12 +24,14 @@ class Middleware {
     }
 
     jwt.verify(token, process.env.JWT_TOKEN as string),
-      (err: Error, payload) => {
+      (err: Error, payload: any) => {
         if (err) {
           return res.status(403).json({ error: "Ogiltig token!" });
         }
 
-        req.user = payload as JwtPayload;
+        // ändrade från user till body
+
+        req.body = payload as JwtPayload;
         next();
       };
   }
